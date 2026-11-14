@@ -7,7 +7,7 @@ from fastapi.responses import JSONResponse
 
 from app.config import settings
 from app.database import Base, engine
-from app.routers import auth, tutor
+from app.routers import auth, equipe, tutor
 
 log = logging.getLogger("app")
 
@@ -39,6 +39,7 @@ def create_app() -> FastAPI:
 
     app.include_router(auth.router)
     app.include_router(tutor.router)
+    app.include_router(equipe.router)
     return app
 
 
