@@ -1,0 +1,16 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+filterwarnings = ["ignore::ResourceWarning"]
+
+[tool.coverage.run]
+source = ["app"]
+omit = ["app/seed.py"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B"]
+ignore = ["B008"]  # Depends() em argumentos padrão é o padrão do FastAPI
