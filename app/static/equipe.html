@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agenda do dia – Agenda Village Pet</title><link rel="icon" href="data:,">
+<link rel="stylesheet" href="/css/app.css"></head>
+<body>
+<header><div class="marca">🗓️ Agenda do dia</div><div class="unid">Equipe – Village Pet BR-116</div></header>
+<main style="max-width:900px">
+  <div class="campo"><label for="dia">Data</label><input id="dia" type="date"></div>
+  <p id="erro" class="erro oculto" role="alert" tabindex="-1"></p>
+  <table><thead><tr><th scope="col">Horário</th><th scope="col">Pet e ficha</th><th scope="col">Serviço / profissional</th><th scope="col">Status</th></tr></thead>
+    <tbody id="linhas"></tbody></table>
+  <p id="vazio" class="muted oculto">Nenhum agendamento nesta data.</p>
+  <button id="sair" class="btn" type="button">Sair</button>
+</main>
+<script src="/js/api.js"></script>
+<script src="/js/equipe.js"></script>
+</body></html>
