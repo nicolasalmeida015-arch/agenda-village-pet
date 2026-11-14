@@ -4,6 +4,7 @@ import logging
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from app.config import settings
 from app.database import Base, engine
@@ -40,6 +41,7 @@ def create_app() -> FastAPI:
     app.include_router(auth.router)
     app.include_router(tutor.router)
     app.include_router(equipe.router)
+    app.mount("/", StaticFiles(directory="app/static", html=True), name="static")
     return app
 
 

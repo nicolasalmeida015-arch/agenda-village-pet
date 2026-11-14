@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meus pets – Agenda Village Pet</title><link rel="icon" href="data:,">
+<link rel="stylesheet" href="/css/app.css"></head>
+<body>
+<header><div class="marca">🐾 Meus pets</div><div class="unid">Village Pet – BR-116</div></header>
+<main>
+  <ul id="lista" class="card" style="list-style:none;margin:0;padding:14px" aria-label="Pets cadastrados"></ul>
+  <h1>Cadastrar pet</h1>
+  <form id="form" class="card" novalidate>
+    <div class="campo"><label for="nome">Nome do pet</label><input id="nome" required maxlength="60"></div>
+    <div class="campo"><label for="especie">Espécie</label><select id="especie"><option value="cao">Cão</option><option value="gato">Gato</option></select></div>
+    <div class="campo"><label for="porte">Porte</label><select id="porte"><option value="pequeno">Pequeno</option><option value="medio">Médio</option><option value="grande">Grande</option></select></div>
+    <div class="campo"><label for="pelagem">Pelagem</label><select id="pelagem"><option value="curta">Curta</option><option value="media">Média</option><option value="longa">Longa</option></select></div>
+    <div class="campo"><label for="obs">Alergias ou observações (opcional)</label><textarea id="obs" maxlength="500" rows="3"></textarea></div>
+    <p id="erro" class="erro oculto" role="alert" tabindex="-1"></p>
+    <button class="btn prim" type="submit">Salvar pet</button>
+  </form>
+  <a class="btn" href="/">Voltar ao início</a>
+</main>
+<script src="/js/api.js"></script>
+<script src="/js/pets.js"></script>
+</body></html>
