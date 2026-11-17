@@ -5,7 +5,7 @@ services:
     name: agenda-village-pet
     runtime: docker
     plan: free
-    region: oregon
+    region: ohio  # mesma região do PostgreSQL no Neon (AWS us-east-2)
     healthCheckPath: /api/saude
     autoDeploy: true
     envVars:
