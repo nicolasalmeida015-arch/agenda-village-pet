@@ -57,3 +57,8 @@ html.a11y :focus-visible{outline:4px solid #000;outline-offset:2px;box-shadow:0 
 
 /* Telas estreitas: a tabela da agenda da equipe rola na horizontal em vez de estourar a página */
 @media (max-width:600px){table{display:block;overflow-x:auto}}
+
+/* Agenda da equipe: pet com cuidado especial em destaque (ajuste da validação, rodada 1) */
+.cuidado{margin-top:6px;border:2px solid var(--laranja);background:var(--laranjaBg);color:#4a2a00;border-radius:10px;padding:8px 10px}
+tr.linha-cuidado td:first-child{border-left:6px solid var(--laranja)}
+html.a11y .cuidado{border-color:#000;background:#fff;color:#000;border-width:3px}
