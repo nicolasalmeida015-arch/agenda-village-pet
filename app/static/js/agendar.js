@@ -38,6 +38,7 @@ async function confirmar(slot) {
     $("passo-escolha").classList.add("oculto");
     $("detalhe").textContent = $("resumo").textContent || fmtData(ag.data_hora_inicio);
     $("passo-resultado").classList.remove("oculto");
+    $("voltar-rodape").classList.add("oculto");  // a tela de confirmação já tem o botão de voltar
     listarMeus();
   } catch (e) {
     if (e.status === 409 && e.detail && e.detail.alternativas) {
