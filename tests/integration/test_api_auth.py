@@ -1,8 +1,22 @@
 """Testes de integração de cadastro, login, logout e proteção de rotas (RF01, RNF01)."""
 
 
-def test_saude(client):
-    assert client.get("/api/saude").json() == {"status": "ok"}
+def test_saude_verifica_o_banco(client):
+    r = client.get("/api/saude")
+    assert r.status_code == 200
+    assert r.json()["status"] == "ok" and r.json()["banco"] == "ok"
+
+
+def test_saude_retorna_503_quando_o_banco_cai(client, monkeypatch):
+    import app.main as principal
+
+    class BancoFora:
+        def connect(self):
+            raise RuntimeError("sem conexão")
+
+    monkeypatch.setattr(principal, "engine", BancoFora())
+    r = client.get("/api/saude")
+    assert r.status_code == 503 and r.json()["banco"] == "indisponivel"
 
 
 def test_cadastro_login_e_eu(client, dados):
