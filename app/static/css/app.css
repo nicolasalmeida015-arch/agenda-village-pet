@@ -34,3 +34,24 @@ display:flex;flex-direction:column;align-items:center;justify-content:center;cur
 table{width:100%;border-collapse:collapse}
 th,td{border-bottom:1px solid var(--borda);padding:10px 6px;text-align:left;vertical-align:top}
 .status{display:inline-flex;align-items:center;gap:4px;font-weight:700;border-radius:8px;padding:2px 8px;border:2px solid currentColor}
+
+/* Botão "A+ Alto contraste" (js/acessibilidade.js) */
+header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+.btn-a11y{min-height:48px;padding:6px 12px;border:2px solid #fff;border-radius:10px;background:transparent;color:#fff;
+font-weight:800;font-size:.95rem;cursor:pointer}
+.btn-a11y[aria-pressed="true"]{background:#ffd400;color:#000;border-color:#ffd400}
+
+/* Modo letra maior + alto contraste: texto 25% maior, preto sobre branco, bordas e foco reforçados */
+html.a11y{font-size:125%}
+html.a11y body{color:#000;background:#fff}
+html.a11y header{background:#000}
+html.a11y .muted{color:#000}
+html.a11y a:not(.btn){text-decoration:underline}
+html.a11y .card,html.a11y input,html.a11y select,html.a11y textarea,html.a11y th,html.a11y td{border-color:#000}
+html.a11y .card{border-width:2px}
+html.a11y .btn,html.a11y .h{border-color:#000;color:#000;border-width:3px}
+html.a11y .btn.prim,html.a11y .h[aria-pressed="true"]{background:#000;color:#fff}
+html.a11y .grid2{grid-template-columns:1fr}
+html.a11y .horas{grid-template-columns:repeat(2,1fr)}
+html.a11y :focus-visible{outline:4px solid #000;outline-offset:2px;box-shadow:0 0 0 8px #ffd400}
+
