@@ -5,9 +5,14 @@ const PROXIMOS = { agendado: ["confirmado", "em_atendimento", "faltou", "cancela
 const dia = document.getElementById("dia");
 dia.value = new Date().toISOString().slice(0, 10);
 
+let requisicao = 0;
+
 async function carregar() {
-  const tbody = document.getElementById("linhas"); tbody.replaceChildren();
+  const tbody = document.getElementById("linhas");
+  const minha = ++requisicao;  // duas cargas simultâneas (troca de data + carga inicial) não duplicam linhas
   const itens = await API.req("GET", "/api/equipe/agenda?dia=" + dia.value);
+  if (minha !== requisicao) return;
+  tbody.replaceChildren();
   document.getElementById("vazio").classList.toggle("oculto", itens.length > 0);
   itens.forEach(a => {
     const tr = el("tr");
