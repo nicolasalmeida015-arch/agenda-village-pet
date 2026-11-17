@@ -42,14 +42,21 @@ async function confirmar(slot) {
     listarMeus();
   } catch (e) {
     if (e.status === 409 && e.detail && e.detail.alternativas) {
-      $("msg-conflito").textContent = e.detail.mensagem;
+      // Ajuste da validação (rodada 1): aviso perto da grade, diz qual horário foi perdido e que basta tocar em
+      // uma alternativa para agendar na hora.
+      $("msg-conflito").textContent = "O horário das " + slot.inicio.slice(11, 16) + " acabou de ser reservado por outro cliente.";
       const alt = $("alternativas"); alt.replaceChildren();
+      $("dica-conflito").textContent = e.detail.alternativas.length
+        ? "Toque em um dos horários livres abaixo para agendar agora:"
+        : "Não há outro horário livre nesta data. Escolha outro dia.";
       e.detail.alternativas.forEach(a => {
         const b = botaoHorario({ inicio: a.inicio, id_profissional: a.id_profissional }, alt);
+        b.lastChild.textContent = "Agendar";
         b.addEventListener("click", () => confirmar({ inicio: a.inicio, id_profissional: a.id_profissional }));
         alt.append(b);
       });
-      $("conflito").classList.remove("oculto"); $("conflito").focus();
+      $("conflito").classList.remove("oculto");
+      $("conflito").scrollIntoView({ block: "center" }); $("conflito").focus();
       carregarHorarios();  // o horário que ficou ocupado sai da grade
     } else mostrarErro($("erro"), e);
   }

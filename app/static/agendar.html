@@ -11,6 +11,11 @@
     <div class="campo"><label for="pet">Pet</label><select id="pet"></select></div>
     <div class="campo" style="margin-top:10px"><label for="servico">Serviço</label><select id="servico"></select></div>
     <div class="campo" style="margin-top:10px"><label for="dia">Data</label><input id="dia" type="date"></div>
+    <section id="conflito" class="alerta oculto" role="alert" tabindex="-1" style="margin-top:14px">
+      <strong>⚠️ <span id="msg-conflito"></span></strong>
+      <p id="dica-conflito" style="margin:6px 0 0"></p>
+      <div id="alternativas" class="horas" style="margin-top:8px"></div>
+    </section>
     <h2 style="margin-top:14px">Horário <span class="muted">(escolha um horário livre)</span></h2>
     <div id="horas" class="horas" role="group" aria-label="Horários livres"></div>
     <p id="sem-horario" class="muted oculto">Não há horários livres nesta data. Escolha outro dia.</p>
@@ -25,10 +30,6 @@
     <a class="btn prim" href="/">Voltar ao início</a>
   </section>
 
-  <section id="conflito" class="alerta oculto" role="alert">
-    <strong>⚠️ <span id="msg-conflito"></span></strong>
-    <div id="alternativas" class="horas" style="margin-top:8px"></div>
-  </section>
 
   <section id="meus" class="card"><h2>Meus agendamentos</h2>
     <p id="aviso-meus" class="ok oculto" role="status" aria-live="polite"></p>
