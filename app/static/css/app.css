@@ -55,3 +55,5 @@ html.a11y .grid2{grid-template-columns:1fr}
 html.a11y .horas{grid-template-columns:repeat(2,1fr)}
 html.a11y :focus-visible{outline:4px solid #000;outline-offset:2px;box-shadow:0 0 0 8px #ffd400}
 
+/* Telas estreitas: a tabela da agenda da equipe rola na horizontal em vez de estourar a página */
+@media (max-width:600px){table{display:block;overflow-x:auto}}
