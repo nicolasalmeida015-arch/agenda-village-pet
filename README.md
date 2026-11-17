@@ -71,6 +71,9 @@ Capturas do MVP executado localmente com dados fictícios, em [`docs/evidencias/
 - `07-fluxo-tutor-conflito.png` – escolha de horário livre e aviso de conflito com 3 alternativas
 - `08-agenda-equipe.png` – agenda do dia da equipe com ficha do pet e status
 - `09-acessibilidade-alto-contraste.png` – mesma tela no modo padrão e com “A+ Alto contraste” ativado
+- `10-ajustes-tutor.png` e `11-ajustes-equipe.png` – versão com os ajustes da 1ª rodada de validação (simulada): aviso de conflito, cancelamento e cuidado especial em destaque
+
+> As rodadas de validação desta experiência foram **simuladas** (participantes e falas fictícios), com autorização do professor.
 
 ## Fluxo de trabalho com Git
 
