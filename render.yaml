@@ -1,0 +1,21 @@
+# Blueprint do Render: serviço web a partir do Dockerfile, com health check na rota de saúde.
+# DATABASE_URL (PostgreSQL do Neon) é informado no painel do Render, nunca no repositório.
+services:
+  - type: web
+    name: agenda-village-pet
+    runtime: docker
+    plan: free
+    region: oregon
+    healthCheckPath: /api/saude
+    autoDeploy: true
+    envVars:
+      - key: AMBIENTE
+        value: producao
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: SEED_DEMO
+        value: "1"
+      - key: TZ
+        value: America/Sao_Paulo

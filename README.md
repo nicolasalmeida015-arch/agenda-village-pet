@@ -19,8 +19,8 @@ econômico** (metas 8.2 e 8.3).
 | RF03 | Agendamento online sem sobreposição; conflito retorna 3 alternativas | `services/agendamento_service.py`, `agendar.html` |
 | RF04 | Agenda do dia da equipe com ficha do pet e status | `routers/equipe.py`, `equipe.html` |
 | RF05 | Agendamento pelo balcão/telefone na mesma agenda | `routers/equipe.py` |
-| RF06 | Lembrete da véspera com link de WhatsApp pré-preenchido | `services/lembrete_service.py` |
-| RF07/RF08 | Pets sem retorno e painel de indicadores da gerência | `services/indicador_service.py` |
+| RF06 | Lembrete da véspera com link de WhatsApp pré-preenchido, gerado pelo painel da gerência | `services/lembrete_service.py`, `painel.html` |
+| RF07/RF08 | Pets sem retorno e painel de indicadores da gerência | `services/indicador_service.py`, `painel.html` |
 | RNF04 | Acessibilidade: alvos de toque ≥ 48 px, contraste AA, foco visível e botão **“A+ Alto contraste”** (letra 25% maior + alto contraste, salvo no aparelho) | `css/app.css`, `js/acessibilidade.js` |
 
 ## Arquitetura
@@ -50,6 +50,15 @@ Logins de demonstração (fictícios): `carla@exemplo.com` (tutor), `atendente@e
 `gerente@exemplo.com` — senha `senha-de-teste-123`. Documentação interativa da API: `/docs`.
 
 Com PostgreSQL: `docker compose up --build`.
+
+## Publicação (deploy) e monitoramento
+
+- **Aplicação:** Render (Web Service gratuito) a partir do `Dockerfile`, descrito em [`render.yaml`](render.yaml); deploy automático a cada push na `main`.
+- **Banco:** PostgreSQL gerenciado no Neon; a URL de conexão fica só na variável `DATABASE_URL` do Render.
+- **Configuração de produção:** `AMBIENTE=producao` exige `JWT_SECRET` forte (gerado pelo Render); `TZ=America/Sao_Paulo`
+  mantém as regras de horário no fuso da loja; `SEED_DEMO=1` cria os dados **fictícios** de demonstração.
+- **Monitoramento:** `GET /api/saude` testa a aplicação e o banco (503 se o banco cair) e é usado pelo health check do
+  Render e pelo UptimeRobot; cada requisição da API gera uma linha de log com método, rota, status e tempo.
 
 ## Testes e integração contínua
 
