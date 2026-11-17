@@ -62,3 +62,9 @@ html.a11y :focus-visible{outline:4px solid #000;outline-offset:2px;box-shadow:0 
 .cuidado{margin-top:6px;border:2px solid var(--laranja);background:var(--laranjaBg);color:#4a2a00;border-radius:10px;padding:8px 10px}
 tr.linha-cuidado td:first-child{border-left:6px solid var(--laranja)}
 html.a11y .cuidado{border-color:#000;background:#fff;color:#000;border-width:3px}
+
+/* Painel da gerência */
+.indicadores{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.ind{display:flex;flex-direction:column;gap:4px}
+.ind strong{font-size:2rem;line-height:1.1;color:var(--azul)}
+html.a11y .ind strong{color:#000}

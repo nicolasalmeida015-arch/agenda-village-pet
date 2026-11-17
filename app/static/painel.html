@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Painel da gerência – Agenda Village Pet</title><link rel="icon" href="data:,">
+<link rel="stylesheet" href="/css/app.css">
+<script src="/js/acessibilidade.js"></script></head>
+<body>
+<header><div class="marca">📊 Painel da gerência</div><div class="unid">Village Pet BR-116</div></header>
+<main style="max-width:900px">
+  <form id="form-periodo" class="card" novalidate>
+    <h2>Período</h2>
+    <div class="grid2">
+      <div class="campo"><label for="inicio">De</label><input id="inicio" type="date" required></div>
+      <div class="campo"><label for="fim">Até</label><input id="fim" type="date" required></div>
+    </div>
+    <button class="btn prim" type="submit" style="margin-top:12px">Atualizar indicadores</button>
+  </form>
+  <p id="erro" class="erro oculto" role="alert" tabindex="-1"></p>
+
+  <section aria-labelledby="t-ind" aria-live="polite">
+    <h2 id="t-ind">Indicadores</h2>
+    <div class="indicadores">
+      <div class="card ind"><span class="muted">Atendimentos no período</span><strong id="i-total">–</strong></div>
+      <div class="card ind"><span class="muted">Taxa de faltas</span><strong id="i-faltas">–</strong><small id="i-faltas-n" class="muted"></small></div>
+      <div class="card ind"><span class="muted">Ocupação da agenda</span><strong id="i-ocupacao">–</strong></div>
+      <div class="card ind"><span class="muted">Pets sem retorno</span><strong id="i-retorno">–</strong><small class="muted">passaram do intervalo e não têm horário marcado</small></div>
+    </div>
+    <div class="card" style="margin-top:12px"><h2>Serviços mais procurados</h2><ol id="i-servicos"></ol></div>
+  </section>
+
+  <section class="card" aria-labelledby="t-lemb">
+    <h2 id="t-lemb">Lembretes de amanhã</h2>
+    <p class="muted">Gera a mensagem de lembrete para cada atendimento de amanhã. Cada lembrete é gerado uma única vez.</p>
+    <button id="gerar" class="btn" type="button">Gerar lembretes de amanhã</button>
+    <p id="lemb-vazio" class="muted oculto">Nenhum lembrete pendente para amanhã.</p>
+    <ul id="lembretes" style="padding-left:18px"></ul>
+  </section>
+
+  <a class="btn" href="/equipe.html">Voltar à agenda do dia</a>
+</main>
+<script src="/js/api.js"></script>
+<script src="/js/painel.js"></script>
+</body></html>

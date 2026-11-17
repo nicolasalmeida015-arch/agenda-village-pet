@@ -50,3 +50,6 @@ async function carregar() {
 dia.addEventListener("change", () => carregar().catch(e => mostrarErro(document.getElementById("erro"), e)));
 document.getElementById("sair").addEventListener("click", () => { sessionStorage.removeItem("token"); location.href = "/"; });
 carregar().catch(() => (location.href = "/"));
+API.req("GET", "/api/auth/eu").then(eu => {  // só a gerência vê o atalho para o painel
+  if (eu.perfil === "gerente") document.getElementById("link-painel").classList.remove("oculto");
+}).catch(() => {});

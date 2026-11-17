@@ -1,7 +1,7 @@
 """Interface web: telas servidas pela API e recurso de acessibilidade presente em todas elas."""
 import pytest
 
-TELAS = ["/", "/cadastro.html", "/pets.html", "/agendar.html", "/equipe.html"]
+TELAS = ["/", "/cadastro.html", "/pets.html", "/agendar.html", "/equipe.html", "/painel.html"]
 
 
 @pytest.mark.parametrize("tela", TELAS)
@@ -34,3 +34,10 @@ def test_agenda_da_equipe_tem_resumo_e_destaque_de_cuidado_especial(client):
     js = client.get("/js/equipe.js").text
     assert "Cuidado especial" in js and "linha-cuidado" in js
     assert ".cuidado{" in client.get("/css/app.css").text
+
+
+def test_painel_da_gerencia_usa_indicadores_e_lembretes(client):
+    js = client.get("/js/painel.js").text
+    assert "/api/equipe/indicadores" in js and "/api/equipe/lembretes/vespera" in js
+    assert 'eu.perfil !== "gerente"' in js
+    assert "innerHTML" not in js
