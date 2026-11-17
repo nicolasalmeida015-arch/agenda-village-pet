@@ -21,6 +21,7 @@ econômico** (metas 8.2 e 8.3).
 | RF05 | Agendamento pelo balcão/telefone na mesma agenda | `routers/equipe.py` |
 | RF06 | Lembrete da véspera com link de WhatsApp pré-preenchido | `services/lembrete_service.py` |
 | RF07/RF08 | Pets sem retorno e painel de indicadores da gerência | `services/indicador_service.py` |
+| RNF04 | Acessibilidade: alvos de toque ≥ 48 px, contraste AA, foco visível e botão **“A+ Alto contraste”** (letra 25% maior + alto contraste, salvo no aparelho) | `css/app.css`, `js/acessibilidade.js` |
 
 ## Arquitetura
 
@@ -62,6 +63,14 @@ pytest --cov=app --cov-report=term-missing
   agenda da equipe, permissões por perfil, lembretes.
 - O workflow [`.github/workflows/ci.yml`](.github/workflows/ci.yml) roda **ruff**, **pytest com cobertura
   mínima de 80%** e **pip-audit** em todo push e pull request para `main`.
+
+## Evidências de funcionamento
+
+Capturas do MVP executado localmente com dados fictícios, em [`docs/evidencias/`](docs/evidencias/):
+
+- `07-fluxo-tutor-conflito.png` – escolha de horário livre e aviso de conflito com 3 alternativas
+- `08-agenda-equipe.png` – agenda do dia da equipe com ficha do pet e status
+- `09-acessibilidade-alto-contraste.png` – mesma tela no modo padrão e com “A+ Alto contraste” ativado
 
 ## Fluxo de trabalho com Git
 
