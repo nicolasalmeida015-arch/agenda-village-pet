@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: village
+      POSTGRES_PASSWORD: village-dev
+      POSTGRES_DB: agenda_village_pet
+    ports: ["5432:5432"]
+  app:
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://village:village-dev@db:5432/agenda_village_pet
+      JWT_SECRET: dev-only-troque-este-segredo-em-producao-32b+
+    ports: ["8000:8000"]
+    depends_on: [db]
