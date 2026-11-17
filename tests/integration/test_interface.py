@@ -20,3 +20,17 @@ def test_script_de_acessibilidade_e_servido_e_respeita_a_csp(client):
     assert "innerHTML" not in r.text  # textContent apenas, coerente com a política de XSS
     csp = client.get("/").headers["content-security-policy"]
     assert "script-src 'self'" in csp
+
+
+def test_aviso_de_conflito_fica_junto_da_grade_de_horarios(client):
+    html = client.get("/agendar.html").text
+    escolha = html.split('id="passo-escolha"')[1].split("</section>\n\n")[0]
+    assert escolha.index('id="conflito"') < escolha.index('id="horas"')
+    assert 'id="dica-conflito"' in escolha
+
+
+def test_agenda_da_equipe_tem_resumo_e_destaque_de_cuidado_especial(client):
+    assert 'id="resumo-dia"' in client.get("/equipe.html").text
+    js = client.get("/js/equipe.js").text
+    assert "Cuidado especial" in js and "linha-cuidado" in js
+    assert ".cuidado{" in client.get("/css/app.css").text
