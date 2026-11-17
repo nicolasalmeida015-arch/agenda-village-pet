@@ -1,5 +1,5 @@
 """Testes de integração das rotas do tutor (API + serviço + banco)."""
-from tests.conftest import as_dt
+from tests.conftest import as_dt, login
 
 
 def test_rotas_do_tutor_exigem_login(client, dados):
@@ -77,3 +77,24 @@ def test_mesmo_horario_vai_para_outro_profissional_livre(client, db, dados, h_tu
     segundo = client.post("/api/agendamentos", headers=h_tutor, json=corpo)
     assert segundo.status_code == 201
     assert segundo.json()["id_profissional"] != primeiro["id_profissional"]
+
+
+def test_cancelar_libera_o_horario_e_nao_cancela_duas_vezes(client, dados, h_tutor, dia_util):
+    inicio = as_dt(dia_util, 10).isoformat()
+    corpo = {"id_pet": dados["thor"].id_pet, "id_servico": 1, "id_profissional": dados["prof"].id_profissional,
+             "data_hora_inicio": inicio}
+    url_livres = f"/api/disponibilidade?id_pet={dados['thor'].id_pet}&id_servico=1&dia={dia_util}"
+    ag = client.post("/api/agendamentos", headers=h_tutor, json=corpo).json()
+    assert inicio not in [s["inicio"] for s in client.get(url_livres, headers=h_tutor).json()]
+
+    assert client.post(f"/api/agendamentos/{ag['id_agendamento']}/cancelar", headers=h_tutor).status_code == 200
+    assert inicio in [s["inicio"] for s in client.get(url_livres, headers=h_tutor).json()]
+    assert client.post(f"/api/agendamentos/{ag['id_agendamento']}/cancelar", headers=h_tutor).status_code == 422
+
+
+def test_tutor_nao_cancela_agendamento_de_outro_tutor(client, dados, h_tutor, dia_util):
+    h_beto = login(client, "beto@exemplo.com")
+    corpo = {"id_pet": dados["rex"].id_pet, "id_servico": 1, "id_profissional": dados["prof"].id_profissional,
+             "data_hora_inicio": as_dt(dia_util, 13).isoformat()}
+    ag = client.post("/api/agendamentos", headers=h_beto, json=corpo).json()
+    assert client.post(f"/api/agendamentos/{ag['id_agendamento']}/cancelar", headers=h_tutor).status_code == 404

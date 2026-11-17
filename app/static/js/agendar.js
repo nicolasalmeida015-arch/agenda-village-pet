@@ -55,11 +55,41 @@ async function confirmar(slot) {
   }
 }
 
+const CANCELAVEIS = new Set(["agendado", "confirmado"]);
+
+function botaoCancelar(ag, li) {
+  // Dois toques para cancelar (sem janela de confirmação do navegador): "Cancelar" -> "Confirmar cancelamento"
+  const b = el("button", { type: "button", class: "btn", style: "min-height:48px;margin-top:6px" }, "Cancelar este agendamento");
+  const manter = el("button", { type: "button", class: "btn oculto", style: "min-height:48px;margin-top:6px" }, "Manter agendamento");
+  b.addEventListener("click", async () => {
+    if (b.dataset.confirmar !== "1") {
+      b.dataset.confirmar = "1"; b.textContent = "Confirmar cancelamento"; b.classList.add("prim");
+      manter.classList.remove("oculto"); b.focus(); return;
+    }
+    b.disabled = true;
+    try {
+      await API.req("POST", `/api/agendamentos/${ag.id_agendamento}/cancelar`);
+      $("aviso-meus").textContent = "Agendamento de " + fmtData(ag.data_hora_inicio) + " cancelado. O horário foi liberado.";
+      $("aviso-meus").classList.remove("oculto");
+      await listarMeus(); carregarHorarios().catch(() => {});
+    } catch (e) { b.disabled = false; mostrarErro($("erro"), e); }
+  });
+  manter.addEventListener("click", () => {
+    delete b.dataset.confirmar; b.textContent = "Cancelar este agendamento"; b.classList.remove("prim");
+    manter.classList.add("oculto"); b.focus();
+  });
+  li.append(b, manter);
+}
+
 async function listarMeus() {
   const ul = $("lista-ags"); ul.replaceChildren();
   const ags = await API.req("GET", "/api/agendamentos");
   if (!ags.length) ul.append(el("li", { class: "muted" }, "Nenhum agendamento."));
-  ags.forEach(a => ul.append(el("li", {}, fmtData(a.data_hora_inicio) + " – " + a.status)));
+  ags.forEach(a => {
+    const li = el("li", { style: "margin-bottom:10px" }, fmtData(a.data_hora_inicio) + " – " + a.status);
+    if (CANCELAVEIS.has(a.status) && new Date(a.data_hora_inicio) > new Date()) botaoCancelar(a, li);
+    ul.append(li);
+  });
 }
 
 (async () => {
