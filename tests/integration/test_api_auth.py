@@ -7,6 +7,10 @@ def test_saude_verifica_o_banco(client):
     assert r.json()["status"] == "ok" and r.json()["banco"] == "ok"
 
 
+def test_saude_aceita_head_usado_pelos_monitores(client):
+    assert client.head("/api/saude").status_code == 200
+
+
 def test_saude_retorna_503_quando_o_banco_cai(client, monkeypatch):
     import app.main as principal
 

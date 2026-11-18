@@ -46,7 +46,9 @@ def create_app() -> FastAPI:
         log.exception("Erro não tratado em %s", request.url.path)  # detalhe só no log (RNF02)
         return JSONResponse(status_code=500, content={"detail": "Algo deu errado. Tente novamente."})
 
-    @app.get("/api/saude", tags=["infra"])
+    # HEAD também: monitores de disponibilidade (ex.: UptimeRobot) checam com HEAD; sem isso a requisição caía no
+    # servidor de arquivos estáticos e respondia 404, marcando o app como DOWN.
+    @app.api_route("/api/saude", methods=["GET", "HEAD"], tags=["infra"])
     def saude():
         """Verificação de saúde usada pelo Render (health check) e pelo UptimeRobot: testa também o banco."""
         try:
