@@ -1,6 +1,5 @@
 // Painel da gerência (RF08) e disparo dos lembretes da véspera (RF06). Apenas perfil "gerente".
 const $ = id => document.getElementById(id);
-const iso = d => d.toISOString().slice(0, 10);
 
 async function carregar() {
   $("erro").classList.add("oculto");
@@ -43,8 +42,7 @@ $("gerar").addEventListener("click", async () => {
     const eu = await API.req("GET", "/api/auth/eu");
     if (eu.perfil !== "gerente") { location.href = "/equipe.html"; return; }
   } catch (_) { location.href = "/"; return; }
-  const hoje = new Date();
-  $("fim").value = iso(hoje);
-  $("inicio").value = iso(new Date(hoje.getTime() - 29 * 864e5));
+  $("fim").value = dataLocal();
+  $("inicio").value = dataLocal(new Date(), -29);
   carregar().catch(e => mostrarErro($("erro"), e));
 })();

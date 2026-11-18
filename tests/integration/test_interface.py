@@ -41,3 +41,9 @@ def test_painel_da_gerencia_usa_indicadores_e_lembretes(client):
     assert "/api/equipe/indicadores" in js and "/api/equipe/lembretes/vespera" in js
     assert 'eu.perfil !== "gerente"' in js
     assert "innerHTML" not in js
+
+
+@pytest.mark.parametrize("script", ["agendar.js", "equipe.js", "painel.js"])
+def test_datas_padrao_usam_o_fuso_local_e_nao_utc(client, script):
+    js = client.get(f"/js/{script}").text
+    assert "toISOString" not in js and "dataLocal(" in js

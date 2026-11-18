@@ -3,7 +3,7 @@ const ROTULOS = { agendado: "🕒 Agendado", confirmado: "✔️ Confirmado", em
 const PROXIMOS = { agendado: ["confirmado", "em_atendimento", "faltou", "cancelado"], confirmado: ["em_atendimento", "faltou", "cancelado"],
   em_atendimento: ["concluido"] };
 const dia = document.getElementById("dia");
-dia.value = new Date().toISOString().slice(0, 10);
+dia.value = dataLocal();  // hoje, no fuso do aparelho
 
 let requisicao = 0;
 
