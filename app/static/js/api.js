@@ -33,3 +33,9 @@ function fmtData(iso) {
   return d.toLocaleDateString("pt-BR", { weekday: "long", day: "2-digit", month: "2-digit" }) +
     " às " + d.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
 }
+
+// Data local (AAAA-MM-DD) do aparelho. toISOString() usa UTC e, depois das 21h em São Paulo, já devolveria o dia seguinte.
+function dataLocal(d = new Date(), somaDias = 0) {
+  const x = new Date(d.getFullYear(), d.getMonth(), d.getDate() + somaDias);
+  return x.getFullYear() + "-" + String(x.getMonth() + 1).padStart(2, "0") + "-" + String(x.getDate()).padStart(2, "0");
+}

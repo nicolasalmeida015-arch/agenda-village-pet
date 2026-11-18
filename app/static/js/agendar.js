@@ -105,7 +105,7 @@ async function listarMeus() {
   } catch (_) { location.href = "/"; return; }
   pets.forEach(p => $("pet").append(el("option", { value: p.id_pet }, p.nome + " – porte " + p.porte)));
   servicos.forEach(s => $("servico").append(el("option", { value: s.id_servico }, s.nome)));
-  const amanha = new Date(Date.now() + 864e5); $("dia").value = amanha.toISOString().slice(0, 10);
+  $("dia").value = dataLocal(new Date(), 1);  // amanhã, no fuso do aparelho
   ["pet", "servico", "dia"].forEach(id => $(id).addEventListener("change", () => carregarHorarios().catch(e => mostrarErro($("erro"), e))));
   $("confirmar").addEventListener("click", () => escolhido && confirmar(escolhido));
   await carregarHorarios(); await listarMeus();
