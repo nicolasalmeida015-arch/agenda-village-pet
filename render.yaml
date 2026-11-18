@@ -1,18 +1,30 @@
-# Blueprint do Render: serviço web a partir do Dockerfile, com health check na rota de saúde.
-# DATABASE_URL (PostgreSQL do Neon) é informado no painel do Render, nunca no repositório.
+# Blueprint do Render: serviço web (Dockerfile) + PostgreSQL gerenciado, na mesma região.
+# A URL de conexão do banco é ligada pelo próprio Render (fromDatabase): nenhuma credencial fica no repositório
+# nem é copiada à mão. O banco só aceita conexões da rede interna do Render (ipAllowList vazio).
+databases:
+  - name: agenda-village-pet-db
+    plan: free
+    region: ohio
+    databaseName: agenda_village_pet
+    user: village
+    postgresMajorVersion: "16"
+    ipAllowList: []
+
 services:
   - type: web
     name: agenda-village-pet
     runtime: docker
     plan: free
-    region: ohio  # mesma região do PostgreSQL no Neon (AWS us-east-2)
+    region: ohio
     healthCheckPath: /api/saude
     autoDeploy: true
     envVars:
       - key: AMBIENTE
         value: producao
       - key: DATABASE_URL
-        sync: false
+        fromDatabase:
+          name: agenda-village-pet-db
+          property: connectionString
       - key: JWT_SECRET
         generateValue: true
       - key: SEED_DEMO

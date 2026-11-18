@@ -54,7 +54,10 @@ Com PostgreSQL: `docker compose up --build`.
 ## Publicação (deploy) e monitoramento
 
 - **Aplicação:** Render (Web Service gratuito) a partir do `Dockerfile`, descrito em [`render.yaml`](render.yaml); deploy automático a cada push na `main`.
-- **Banco:** PostgreSQL gerenciado no Neon; a URL de conexão fica só na variável `DATABASE_URL` do Render.
+- **Banco:** PostgreSQL 16 gerenciado pelo Render, na mesma região do app (Ohio). A URL de conexão é ligada pelo próprio
+  Render (`fromDatabase`), sem credencial no repositório, e o banco só aceita conexões da rede interna.
+  Observação: o PostgreSQL gratuito do Render expira 30 dias após a criação; para uso contínuo, basta trocar o plano
+  ou apontar `DATABASE_URL` para outro PostgreSQL (o código aceita qualquer URL `postgres://`).
 - **Configuração de produção:** `AMBIENTE=producao` exige `JWT_SECRET` forte (gerado pelo Render); `TZ=America/Sao_Paulo`
   mantém as regras de horário no fuso da loja; `SEED_DEMO=1` cria os dados **fictícios** de demonstração.
 - **Monitoramento:** `GET /api/saude` testa a aplicação e o banco (503 se o banco cair) e é usado pelo health check do
